@@ -1,8 +1,8 @@
 <div class="col-md-12">
   <% if @recommendation.present? %>
     <h2>Recommended Restaurant: <%= @recommendation.name %></h2>
-    <% if @recommendation.reviews.present? %>
-      <h3>Average Rating: <%= @recommendation.reviews.sum(:rating)/@recommendation.reviews.count %></h3>
+    <% if !@recommendation.average_rating.nil? %>
+      <h3>Average Rating: <%= @recommendation.average_rating %></h3>
     <% end %>
     <% if !@review.blank? %>
       <h3>Looks like you've already written a review! Would you like to update it?<h3>

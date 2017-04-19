@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419174250) do
+ActiveRecord::Schema.define(version: 20170419225426) do
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "average_rating"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.decimal  "average_rating", precision: 2, scale: 1
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "restaurants_users", force: :cascade do |t|

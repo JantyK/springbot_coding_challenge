@@ -1,7 +1,7 @@
 <div class="col-md-12">
   <h2>Reviews for <%= @restaurant.name %></h2>
   <% if @restaurant.reviews.present? %>
-    <h2>Average Rating: <%= @restaurant.reviews.sum(:rating)/@restaurant.reviews.count %></h2>
+    <h2>Average Rating: <%= @restaurant.average_rating %></h2>
   <% end %>
   <hr>
 </div>
