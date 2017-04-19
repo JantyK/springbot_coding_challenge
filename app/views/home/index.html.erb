@@ -4,7 +4,7 @@
     <% if @recommendation.reviews.present? %>
       <h3>Average Rating: <%= @recommendation.reviews.sum(:rating)/@recommendation.reviews.count %></h3>
     <% end %>
-    <% if @review.present? %>
+    <% if !@review.blank? %>
       <h3>Looks like you've already written a review! Would you like to update it?<h3>
       <td><%= link_to('Update Review', restaurant_path(@recommendation), class: "btn btn-success") %></td>
     <% else %>

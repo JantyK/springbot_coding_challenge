@@ -22,15 +22,8 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @last_visited = RestaurantsUser.find_by(user_id: current_user.id, restaurant_id: @restaurant.id)
-    if @last_visited.nil?
-      @last_visited = RestaurantsUser.new(user_id: current_user.id, restaurant_id: @restaurant.id)
-    end
-
-    @review = Review.find_by(user_id: current_user.id, restaurant_id: @restaurant.id)
-    if @review.nil?
-      @review = Review.new(user_id: current_user.id, restaurant_id: @restaurant.id)
-    end
+    @last_visited = RestaurantsUser.find_or_initialize_by(user_id: current_user.id, restaurant_id: @restaurant.id)
+    @review = Review.find_or_initialize_by(user_id: current_user.id, restaurant_id: @restaurant.id)
   end
 
   private
@@ -42,6 +35,6 @@ class RestaurantsController < ApplicationController
   end
 
   def find_restaurant
-    @restaurant = Restaurant.find_by_id(params[:id])
+    @restaurant = Restaurant.find_by(id: params[:id])
   end
 end

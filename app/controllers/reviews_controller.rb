@@ -2,46 +2,28 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_restaurant
   before_action :find_review, only: [:update]
+  before_action :find_or_create_restaurants_user, only: [:update, :create]
 
   def create
-    update_last_visited = params[:reviews][:last_visited]
-    if update_last_visited.present?
-      @last_visited = RestaurantsUser.find_by(user_id: current_user.id, restaurant_id: @restaurant.id)
-      if @last_visited.nil?
-        @last_visited = RestaurantsUser.create(create_restaurants_user_params)
+    if params[:reviews][:rating].present?
+      @review = Review.create(create_review_params)
+      if @review.errors.blank?
+        flash[:notice] = 'Success! New review created!'
+        redirect_to restaurant_path(@restaurant)
       else
-        @last_visited.update(last_visited: update_last_visited)
+        flash[:alert] = 'Error! Unable to create your review!'
+        redirect_to restaurant_path(@restaurant)
       end
-    end
-
-    @review = Review.create(create_review_params)
-    byebug
-    if @review.errors.present?
-      flash[:alert] = 'Error! Please try again!'
-      redirect_to restaurant_path(@restaurant)
-    else
-      flash[:notice] = 'Success! New review created!'
-      redirect_to restaurant_path(@restaurant)
     end
   end
 
   def update
-    update_last_visited = params[:reviews][:last_visited]
-    if update_last_visited.present?
-      @last_visited = RestaurantsUser.find_by(user_id: current_user.id, restaurant_id: @restaurant.id)
-      if @last_visited.nil?
-        @last_visited = RestaurantsUser.create(create_restaurants_user_params)
-      else
-        @last_visited.update(last_visited: update_last_visited)
-      end
-    end
-
     @review.update(update_review_params)
-    if @review.errors.present?
-      flash[:alert] = 'Error! Please try again!'
+    if @review.errors.empty?
+      flash[:notice] = 'Successfully updated your review!'
       redirect_to restaurant_path(@restaurant)
     else
-      flash[:notice] = 'Successfully updated your review!'
+      flash[:alert] = 'Error! Please try again!'
       redirect_to restaurant_path(@restaurant)
     end
   end
@@ -57,14 +39,6 @@ class ReviewsController < ApplicationController
     )
   end
 
-  def create_restaurants_user_params
-    params.require(:reviews).permit(
-      :restaurant_id,
-      :user_id,
-      :last_visited
-    )
-  end
-
   def update_review_params
     params.require(:reviews).permit(
       :body,
@@ -74,10 +48,28 @@ class ReviewsController < ApplicationController
   end
 
   def find_restaurant
-    @restaurant = Restaurant.find_by_id(params[:reviews][:restaurant_id])
+    @restaurant = Restaurant.find_by(id: params[:reviews][:restaurant_id])
   end
 
   def find_review
-    @review = Review.find_by_id(params[:id])
+    @review = Review.find_by(id: params[:id])
+  end
+
+  def find_or_create_restaurants_user
+    update_last_visited = params[:reviews][:last_visited]
+    if !update_last_visited.blank?
+      @last_visited = RestaurantsUser.find_or_create_by(user_id: current_user.id, restaurant_id: @restaurant.id)
+      @last_visited.update(last_visited: update_last_visited)
+
+      if @last_visited.errors.blank?
+        flash[:notice] = 'Success! Updated the last time you visited!'
+        if params[:reviews][:rating].blank?
+          redirect_to restaurant_path(@restaurant)
+        end
+      else
+        flash[:alert] = 'Error! Unable to update the last time you visited!'
+        redirect_to restaurant_path(@restaurant)
+      end
+    end
   end
 end
