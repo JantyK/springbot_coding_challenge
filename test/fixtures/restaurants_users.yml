@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  restaurant: one
+  last_visited: 2017-04-19
+  last_recommended: 2017-04-19
+
+two:
+  user: two
+  restaurant: two
+  last_visited: 2017-04-19
+  last_recommended: 2017-04-19
