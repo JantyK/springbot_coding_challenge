@@ -1,0 +1,30 @@
+<%= f.hidden_field :user_id, value: @review.user_id %>
+<%= f.hidden_field :restaurant_id, value: @review.restaurant_id %>
+<div>
+  <%= f.label :body, @review.id.present? ? "Update your review" : "Write a Review" %><br>
+  <%= f.text_area :body, size: '60x5',  value: @review.body %>
+  <br>
+  <br>
+</div>
+<div>
+  <%= f.label :rating, @review.id.present? ? "Update your rating" : "Rate this Restaurant" %><br>
+  <%= f.radio_button :rating, "1", checked: 1 == @review.rating %>
+  <%= f.label :rating, "1 Star" %>
+  <%= f.radio_button :rating, "2", checked: 2 == @review.rating %>
+  <%= f.label :rating, "2 Stars" %>
+  <%= f.radio_button :rating, "3", checked: 3 == @review.rating %>
+  <%= f.label :rating, "3 Stars" %>
+  <%= f.radio_button :rating, "4", checked: 4 == @review.rating %>
+  <%= f.label :rating, "4 Stars" %>
+  <%= f.radio_button :rating, "5", checked: 5 == @review.rating %>
+  <%= f.label :rating, "5 Stars" %>
+  <br>
+  <br>
+</div>
+<div>
+  <%= f.label :last_visited, @last_visited.present? ? "You last visited on " : "When's the last time you visited this restaurant?" %><br>
+  <%= f.date_field :last_visited, value: @last_visited.last_visited %>
+  <br>
+  <br>
+</div>
+<%= f.submit @review.id.present? ? "Update" : "Save" %>

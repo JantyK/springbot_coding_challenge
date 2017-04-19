@@ -1,2 +1,44 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class="col-md-12">
+  <% if @recommendation.present? %>
+    <h2>Recommended Restaurant: <%= @recommendation.name %></h2>
+    <% if @recommendation.reviews.present? %>
+      <h3>Average Rating: <%= @recommendation.reviews.sum(:rating)/@recommendation.reviews.count %></h3>
+    <% else %>
+      <h3>Restaurant not yet rated...</h3>
+    <% end %>
+  <% else %>
+    <h3>No Restaurants yet...</h3>
+  <% end %>
+  <hr>
+</div>
+<div class="col-md-12">
+  <h4>All Reviews</h4>
+  <br>
+  <table class="small table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>User</th>
+        <th>Review Body</th>
+        <th>Review Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @recommendation.present? %>
+        <% if @recommendation.reviews.blank? %>
+          <tr>
+            <td class='text-center' colspan="9"><h2>Nothing here yet...</h2></td>
+          </tr>
+        <% end %>
+        <% @recommendation.reviews.each do |r| %>
+          <tr>
+            <td><%= r.id %></td>
+            <td><%= r.user.email %></td>
+            <td><%= r.body %></td>
+            <td><%= r.rating %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

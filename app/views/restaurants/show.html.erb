@@ -1,0 +1,19 @@
+<div class="col-md-12">
+  <h2>Reviews for <%= @restaurant.name %></h2>
+  <% if @restaurant.reviews.present? %>
+    <h2>Average Rating: <%= @restaurant.reviews.sum(:rating)/@restaurant.reviews.count %></h2>
+  <% end %>
+  <hr>
+</div>
+<div class="col-md-6">
+  <% if @review.persisted? %>
+    <%= form_for :reviews, url: review_path(id: @review.id), method: :PUT do |f| %>
+      <%= render partial: 'reviews/form', locals: { f: f } %>
+    <% end %>
+  <% else %>
+    <%= form_for :reviews, url: reviews_path do |f| %>
+      <%= render partial: 'reviews/form', locals: { f: f } %>
+    <% end %>
+  <% end %>
+</div>
+<%= render partial: 'reviews_table' %>

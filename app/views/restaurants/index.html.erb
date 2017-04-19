@@ -1,0 +1,38 @@
+<div class="col-md-12">
+  <h2>Restaurants</h2>
+  <p>List of all Restaurants along with their ratings.</p>
+  <%= link_to('Add Restaurant', new_restaurant_path, class: "btn btn-success") %>
+  <br>
+  <br>
+</div>
+<div class="col-md-12">
+  <table class="small table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Restaurant Name</th>
+        <th>Average Rating</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @restaurants.blank? %>
+        <tr>
+          <td class='text-center' colspan="9"><h2>Nothing here yet...</h2></td>
+        </tr>
+      <% end %>
+      <% @restaurants.each do |r| %>
+        <tr>
+          <td><%= r.id %></td>
+          <td><%= r.name %></td>
+          <% if r.reviews.present? %>
+            <td><%= r.reviews.sum(:rating)/r.reviews.count %></td>
+          <% else %>
+            <td><%= "No ratings yet.." %></td>
+          <% end %>
+          <td><%= link_to('View More', restaurant_path(r), class: "btn btn-primary") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

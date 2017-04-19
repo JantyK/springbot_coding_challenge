@@ -10,15 +10,18 @@
 
   <body>
 
-    <% if user_signed_in? %>
       <div class="navbar navbar-static-top navbar-default">
         <div class="navbar-text pull-right">
           <%= link_to 'Home', home_index_path %> |
+          <%= link_to 'All Restaurants', restaurants_path %> |
+          <% if user_signed_in? %>
           <%= link_to 'Edit profile', edit_user_registration_path %> |
-          <%= link_to "Logout", destroy_user_session_path, method: :delete%>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+          <% else %>
+          <%= link_to "Log In", new_user_session_path %>
+          <% end %>
         </div>
       </div>
-    <% end %>
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
