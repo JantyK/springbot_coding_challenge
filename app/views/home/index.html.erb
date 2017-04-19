@@ -17,4 +17,6 @@
   <% end %>
   <hr>
 </div>
-<%= render partial: 'restaurants/reviews_table', locals: { restaurant: @recommendation }%>
+<% if @recommendation.present? %>
+  <%= render partial: 'restaurants/reviews_table', locals: { restaurant: @recommendation }%>
+<% end %>
