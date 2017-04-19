@@ -1,24 +1,14 @@
-# README
+## Springbot Coding challenge
+* This is a Springbot coding challenge, the original link can be found here: https://github.com/springbot/whats-for-lunch
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## What I completed
+* Ability to add Restaurants to a database
+* Ability to review and rate restaurants
+* Ability to input the last time you visited the restaurant
+* Upon visiting the root URL and signing up, you will be recommended a restaurant
+* Upon going to the detailed view of the Restaurant, you will see a table of all reviews and the average rating for the restaurant
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## What I want to accomplish if I have more time:
+* Instead of the recommended restaurant being completely random, I'd like to put in some logic to recommend a restaurant that I haven't visited or been recommended to go to in a while and have a high average rating
+* Getting the app live on Heroku
+* Write tests

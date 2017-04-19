@@ -4,10 +4,12 @@
     <% if @recommendation.reviews.present? %>
       <h3>Average Rating: <%= @recommendation.reviews.sum(:rating)/@recommendation.reviews.count %></h3>
     <% else %>
-      <h3>Restaurant not yet rated...</h3>
+      <h3>Restaurant not yet rated...Review it now!</h3>
+      <td><%= link_to('Add Review', restaurant_path(@recommendation), class: "btn btn-success") %></td>
     <% end %>
   <% else %>
-    <h3>No Restaurants yet...</h3>
+    <h3>No Restaurants yet...Add one now!</h3>
+    <%= link_to('Add Restaurant', new_restaurant_path, class: "btn btn-success") %>
   <% end %>
   <hr>
 </div>
@@ -24,12 +26,11 @@
       </tr>
     </thead>
     <tbody>
-      <% if @recommendation.present? %>
-        <% if @recommendation.reviews.blank? %>
-          <tr>
-            <td class='text-center' colspan="9"><h2>Nothing here yet...</h2></td>
-          </tr>
-        <% end %>
+      <% if @recommendation.nil? || @recommendation.reviews.blank? %>
+        <tr>
+          <td class='text-center' colspan="9"><h2>Nothing here yet...</h2></td>
+        </tr>
+      <% else %>
         <% @recommendation.reviews.each do |r| %>
           <tr>
             <td><%= r.id %></td>

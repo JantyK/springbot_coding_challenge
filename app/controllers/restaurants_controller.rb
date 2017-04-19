@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :authenticate_user!, only: [:new]
+  before_action :authenticate_user!, only: [:new, :show]
   before_action :find_restaurant, only: [:show]
 
   def index
