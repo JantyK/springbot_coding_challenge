@@ -3,8 +3,12 @@
     <h2>Recommended Restaurant: <%= @recommendation.name %></h2>
     <% if @recommendation.reviews.present? %>
       <h3>Average Rating: <%= @recommendation.reviews.sum(:rating)/@recommendation.reviews.count %></h3>
+    <% end %>
+    <% if @review.present? %>
+      <h3>Looks like you've already written a review! Would you like to update it?<h3>
+      <td><%= link_to('Update Review', restaurant_path(@recommendation), class: "btn btn-success") %></td>
     <% else %>
-      <h3>Restaurant not yet rated...Review it now!</h3>
+      <h3>Would you like to write a review for this restaurant?</h3>
       <td><%= link_to('Add Review', restaurant_path(@recommendation), class: "btn btn-success") %></td>
     <% end %>
   <% else %>
@@ -13,33 +17,4 @@
   <% end %>
   <hr>
 </div>
-<div class="col-md-12">
-  <h4>All Reviews</h4>
-  <br>
-  <table class="small table table-bordered table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>User</th>
-        <th>Review Body</th>
-        <th>Review Rating</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if @recommendation.nil? || @recommendation.reviews.blank? %>
-        <tr>
-          <td class='text-center' colspan="9"><h2>Nothing here yet...</h2></td>
-        </tr>
-      <% else %>
-        <% @recommendation.reviews.each do |r| %>
-          <tr>
-            <td><%= r.id %></td>
-            <td><%= r.user.email %></td>
-            <td><%= r.body %></td>
-            <td><%= r.rating %></td>
-          </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<%= render partial: 'restaurants/reviews_table', locals: { restaurant: @recommendation }%>

@@ -1,4 +1,5 @@
 <div class="col-md-12">
+  <h4>All Reviews</h4>
   <br>
   <table class="small table table-bordered table-striped table-hover">
     <thead>
@@ -10,18 +11,19 @@
       </tr>
     </thead>
     <tbody>
-      <% if @restaurant.reviews.blank? %>
+      <% if restaurant.nil? || restaurant.reviews.blank? %>
         <tr>
-          <td class='text-center' colspan="9"><h2>Nothing here yet...</h2></td>
+          <td class='text-center' colspan="9"><h2> No one has reviewed this restaurant yet. </h2></td>
         </tr>
-      <% end %>
-      <% @restaurant.reviews.each do |r| %>
-        <tr>
-          <td><%= r.id %></td>
-          <td><%= r.user.email %></td>
-          <td><%= r.body %></td>
-          <td><%= r.rating %></td>
-        </tr>
+      <% else %>
+        <% restaurant.reviews.each do |r| %>
+          <tr>
+            <td><%= r.id %></td>
+            <td><%= r.user.email %></td>
+            <td><%= r.body %></td>
+            <td><%= r.rating %></td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>

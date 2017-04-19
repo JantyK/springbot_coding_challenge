@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_restaurant, only: [:show, :create, :update]
+  before_action :find_restaurant
   before_action :find_review, only: [:update]
 
   def create
@@ -15,6 +15,7 @@ class ReviewsController < ApplicationController
     end
 
     @review = Review.create(create_review_params)
+    byebug
     if @review.errors.present?
       flash[:alert] = 'Error! Please try again!'
       redirect_to restaurant_path(@restaurant)
