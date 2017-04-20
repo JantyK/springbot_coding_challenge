@@ -11,4 +11,4 @@
 * Average rating is calculated and updated every time a review is added to a restaurant
 
 ## What's next:
-* Write tests
+* Write more tests
