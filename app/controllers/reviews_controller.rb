@@ -2,9 +2,10 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_restaurant
   before_action :find_review, only: [:update]
-  before_action :find_or_create_restaurants_user, only: [:update, :create]
 
   def create
+    find_or_create_restaurants_user
+
     if params[:reviews][:rating].present?
       @review = Review.create(create_review_params)
       if @review.errors.blank?
@@ -18,6 +19,8 @@ class ReviewsController < ApplicationController
   end
 
   def update
+    find_or_create_restaurants_user
+
     @review.update(update_review_params)
     if @review.errors.empty?
       flash[:notice] = 'Successfully updated your review!'
@@ -58,10 +61,11 @@ class ReviewsController < ApplicationController
   def find_or_create_restaurants_user
     update_last_visited = params[:reviews][:last_visited]
     if !update_last_visited.blank?
-      @last_visited = RestaurantsUser.find_or_create_by(user_id: current_user.id, restaurant_id: @restaurant.id)
-      @last_visited.update(last_visited: update_last_visited)
+      @restaurant_user_last_visited = RestaurantsUser.find_or_initialize_by(user_id: current_user.id, restaurant_id: @restaurant.id)
+      @restaurant_user_last_visited.last_visited = update_last_visited
+      @restaurant_user_last_visited.save
 
-      if @last_visited.errors.blank?
+      if @restaurant_user_last_visited.errors.blank?
         flash[:notice] = 'Success! Updated the last time you visited!'
         if params[:reviews][:rating].blank?
           redirect_to restaurant_path(@restaurant)
