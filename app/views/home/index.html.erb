@@ -12,7 +12,7 @@
       <td><%= link_to('Add Review', restaurant_path(@recommendation), class: "btn btn-success") %></td>
     <% end %>
   <% else %>
-    <h3>No Restaurants yet...Add one now!</h3>
+    <h3>No recommendations for you at the moment...</h3>
     <%= link_to('Add Restaurant', new_restaurant_path, class: "btn btn-success") %>
   <% end %>
   <hr>
