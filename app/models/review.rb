@@ -4,6 +4,7 @@ class Review < ApplicationRecord
 
   validates_presence_of :rating, :user_id, :restaurant_id
   validates_uniqueness_of :user_id, scope: :restaurant_id
+  validates :rating, inclusion: 1..5
 
   after_create :update_restaurant_average_rating
   after_update :update_restaurant_average_rating
