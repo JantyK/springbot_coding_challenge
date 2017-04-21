@@ -15,5 +15,6 @@ class Review < ApplicationRecord
     @restaurant = Restaurant.find_by(id: self.restaurant_id)
     average_rating = @restaurant.reviews.sum(:rating)/@restaurant.reviews.count.to_f
     @restaurant.update(average_rating: average_rating)
+    
   end
 end
