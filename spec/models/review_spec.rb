@@ -20,7 +20,6 @@ require 'rails_helper'
       expect(@restaurant.average_rating).to eq(3.5)
       @review.update(rating: 3)
       @restaurant.reload
-      byebug
       expect(@restaurant.average_rating).to eq(4.0)
     end
 end
