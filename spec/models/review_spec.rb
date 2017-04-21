@@ -18,5 +18,9 @@ require 'rails_helper'
       @review = Review.create(user_id: @user_two.id, restaurant_id: @restaurant.id, rating: 2)
       @restaurant.reload
       expect(@restaurant.average_rating).to eq(3.5)
+      @review.update(rating: 3)
+      @restaurant.reload
+      byebug
+      expect(@restaurant.average_rating).to eq(4.0)
     end
 end
